@@ -7,12 +7,12 @@ from app import app, db
 from app.models import User, Post
 
 
-class UserModelClass(unittest.TestCase):
+class UserModelCase(unittest.TestCase):
     def setUp(self):
         self.app_context = app.app_context()
         self.app_context.push()
         db.create_all()
-    
+
     def tearDown(self):
         db.session.remove()
         db.drop_all()
@@ -29,7 +29,7 @@ class UserModelClass(unittest.TestCase):
         self.assertEqual(u.avatar(128), ('https://www.gravatar.com/avatar/'
                                          'd4c74594d841139328695756648b6bd6'
                                          '?d=identicon&s=128'))
-    
+
     def test_follow(self):
         u1 = User(username='john', email='john@example.com')
         u2 = User(username='susan', email='susan@example.com')
@@ -56,7 +56,7 @@ class UserModelClass(unittest.TestCase):
         self.assertFalse(u1.is_following(u2))
         self.assertEqual(u1.following_count(), 0)
         self.assertEqual(u2.followers_count(), 0)
-    
+
     def test_follow_posts(self):
         # create four users
         u1 = User(username='john', email='john@example.com')
@@ -94,6 +94,7 @@ class UserModelClass(unittest.TestCase):
         self.assertEqual(f2, [p2, p3])
         self.assertEqual(f3, [p3, p4])
         self.assertEqual(f4, [p4])
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
